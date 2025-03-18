@@ -1,0 +1,1 @@
+const config = {"port":40,"feed":"https://6abc.com/feed","adBanner":"The Latest News from ARN 4 News","fetchInterval":15,"twcApiKey":"e1f10a1e78da46f5b10a1e78da96f525","weatherCities":["08054:US","08002:US","08043:US","08060:US","08360:US","08401:US"],"stockIndicies":["^GSPC","^DJI","^IXIC","NVDA","GM","MSFT","AAPL","DIS","META"]}
