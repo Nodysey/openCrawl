@@ -58,6 +58,22 @@ async function getStocks() {
     };
 };
 
+async function getSports() {
+    const details = await fetch(`/data/sport.json`)
+        .then(response => response.json())
+        .then(data => {return data});
+    var currentLeague = '';
+    for (let idx = 0; idx < details.length; idx++) {
+        const itm = details[idx];
+        if (itm.league != currentLeague) {
+            crawls.push(`#${itm.league}`);
+            currentLeague = itm.league
+        }
+        crawls.push(`${itm.home_name} ${itm.home_score} ​ ${itm.away_name} ${itm.away_score} | ${itm.time}`);
+        crawls.push('%'); // Add ARN Logo to seperate News Stories
+    };
+};
+
 function advanceCrawl() {
     const crawlWidth = document.getElementById('crawl').getBoundingClientRect().width;
     const containerWidth = document.getElementById('container').getBoundingClientRect().width;
@@ -144,10 +160,12 @@ function cueAndPlay(type) {
 function daddyCantore(enableOrDisable) {
     if (enableOrDisable == true) {
         document.getElementById('crawl').style.background = 'var(--severe-background)';
+        document.getElementById('logo-wrapper').style.background = 'var(--severe-background)';
         document.getElementById('datetime-wrap').style.color = 'var(--severe-background)';
         document.getElementById('headcont').style.display = 'none';
     } else {
         document.getElementById('crawl').style.background = 'var(--background)';
+        document.getElementById('logo-wrapper').style.background = 'var(--background)';
         document.getElementById('datetime-wrap').style.color = 'var(--background)';
         document.getElementById('headcont').style.display = 'flex';
     }
@@ -160,6 +178,7 @@ function start() {
     setTimeout(() => {getNewsStories()}, 500);
     setTimeout(() => {getWeather()}, 1000);
     setTimeout(() => {getStocks()}, 1500);
+    setTimeout(() => {getSports()}, 2000);
 
     // display starter
     displayHeader(config.adBanner)
@@ -215,7 +234,7 @@ async function dateTime() {
     const wx = await wxPromise.json();
     const temp = wx[0].temp;
 
-    document.getElementById('datetime').innerText = `​ ${hour}:${minute} ​ ​ ​ ${temp}°`;
+    document.getElementById('datetime').innerText = `​ ${hour}:${minute} ​ ​ ${temp}°`;
 }
 
 setInterval(dateTime,1000)

@@ -42,13 +42,13 @@ body {
 }
 
 #logo-wrapper {
-    width: 240px;
-    height: 95px;
+    width: 224px;
+    height: 82px;
     position: absolute;
     background-color: var(--background);
-    left: 60px;
-    top: 885px;
-    /* border-right: 3px solid var(--border-3); */
+    left: 88px;
+    top: 918px;
+    border-right: 3px solid var(--foreground);
 
     display: flex;
     justify-content: center;
@@ -57,23 +57,25 @@ body {
 
 #logo {
     width: auto;
-    height: 65px;
+    height: 60px;
 }
 
 .main {
     width: 1920px;
     height: 1080px;
     background-color: transparent;
+    background-image: url(snapshot.png);
+    background-size: cover;
 }
 
 #crawl {
     color: var(--foreground);
     background: var(--background);
     position: relative;
-    top: 980px;
-    left: 60px;
-    height: 48px;
-    width: 1860px;
+    top: 1000px;
+    left: 88px;
+    height: 46px;
+    width: 1832px;
     overflow: hidden;
 }
 #text-wrapper {
@@ -90,6 +92,7 @@ body {
     align-items: center;
     height: 100%;
     transform: translateX(100%);
+    text-transform: uppercase;
 }
 .item {
     display: flex;
@@ -99,7 +102,7 @@ body {
     margin: 0 10px;
     justify-content: center;
     font-family: var(--text-font);
-    font-weight: normal;
+    font-weight: bold;
     font-size: 22pt;
 }
 .stock {
@@ -180,14 +183,12 @@ body {
     flex-shrink: 0;
     position: absolute;
     left: 0;
-    width: 240px;
+    width: 224px;
     height: 100%;
     align-items: center;
     justify-content: center;
-    border-top: 2px solid var(--border-1);
     background-color: var(--foreground);
     color: var(--background);
-    border-right: 2px solid var(--border-1);
     z-index: 11;
 }
 #datetime {
@@ -196,12 +197,12 @@ body {
     top: 0;
     left: 0;
     width: fit-content;
-    height: 23px;
+    height: 24px;
     flex-shrink: 0;
     margin: 13px;
     font-family: var(--text-font);
     font-weight: bold;
-    font-size: 22pt;
+    font-size: 23pt;
     text-wrap: nowrap;
     animation-duration: .2s;
     animation-timing-function: linear;

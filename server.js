@@ -14,6 +14,7 @@ const config = {
     "twcApiKey": "e1f10a1e78da46f5b10a1e78da96f525", // TWC Api Key
     "weatherCities": ["08054:US", "08002:US", "08043:US", "08060:US", "08360:US", "08401:US"], // Locations to use for the weather segment
     "stockIndicies": ["^GSPC", "^DJI", "^IXIC", "NVDA", "GM", "MSFT", "AAPL", "DIS", "META"], // Indicies to use for the Stocks segment
+    "sportLeagues": ["baseball/mlb","basketball/nba", "football/nfl", "hockey/nhl"],
 }
 
 app.use(express.static(path.join(__dirname)));
@@ -116,12 +117,38 @@ async function fetchStocks() {
     fs.writeFile((__dirname, 'data/stock.json'), JSON.stringify(list));
 }
 
+async function fetchSports() {
+    var list = [];
+    for (let idx = 0; idx < config.sportLeagues.length; idx++) {
+        const itm = config.sportLeagues[idx];
+        const details = await fetch(`https://site.api.espn.com/apis/site/v2/sports/${itm}/scoreboard`)
+        .then(response => response.json())
+        .then(data => {return data});
+        for (let imx = 0; imx < details.events.length; imx++) {
+            const idm = details.events[imx];
+            const data = {
+                "league": details.leagues[0].abbreviation,
+                "home_name": idm.competitions[0].competitors[0].team.abbreviation,
+                "home_score": idm.competitions[0].competitors[0].score,
+                "away_name": idm.competitions[0].competitors[1].team.abbreviation,
+                "away_score": idm.competitions[0].competitors[1].score,
+                "time": idm.competitions[0].status.type.shortDetail
+            };
+            list.push(data);
+        }
+        console.log('Fetched games from ' + itm)
+    }
+    fs.writeFile((__dirname, 'data/sport.json'), JSON.stringify(list));
+}
+
 setInterval(() => {
     fetchFeed();
     fetchWeather();
     fetchStocks();
+    fetchSports();
 }, config.fetchInterval * 60000);
 
 fetchFeed();
 fetchWeather();
 fetchStocks();
+fetchSports();
