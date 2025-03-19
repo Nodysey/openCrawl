@@ -116,8 +116,8 @@ async function tracker(idx) {
     console.log('tracker placed on item', idx)
     function check() {
         const itm = document.querySelector(`[data-id="${String(idx)}"]`);
-        const xPos = itm.getBoundingClientRect().x;
-        if (xPos < crawlWidth) {
+        const xPos = itm.getBoundingClientRect().left;
+        if (xPos - 348 < crawlWidth) {
             if (itm.id.substring(0,2) == '!!') {
                 daddyCantore(true);
                 const beep = cueAndPlay('beep');
@@ -166,7 +166,7 @@ function daddyCantore(enableOrDisable) {
     } else {
         document.getElementById('crawl').style.background = 'var(--background)';
         document.getElementById('logo-wrapper').style.background = 'var(--background)';
-        document.getElementById('datetime-wrap').style.color = 'var(--background)';
+        document.getElementById('datetime-wrap').style.color = 'var(--text-color)';
         document.getElementById('headcont').style.display = 'flex';
     }
 }
@@ -234,7 +234,8 @@ async function dateTime() {
     const wx = await wxPromise.json();
     const temp = wx[0].temp;
 
-    document.getElementById('datetime').innerText = `​ ${hour}:${minute} ​ ​ ${temp}°`;
+    document.getElementById('time').innerText = `${hour}:${minute}`;
+    document.getElementById('temp').innerText = `${temp}°`;
 }
 
 setInterval(dateTime,1000)
