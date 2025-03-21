@@ -93,8 +93,9 @@ async function advanceCrawl() {
             itm.style.animationName = "header-in";
             if (itm.getBoundingClientRect().width > crawlWidth) {
                 setTimeout(() => {
+                    itm.style.animationName = '';
                     var t = setInterval(() => {
-                        itm.style.transform = `translateX(${offset}px)`;
+                        itm.style.transform = `translateX(${offset}px) translateY(0px)`;
                         offset = offset - speed;
                         if ((offset * -1) - itm.getBoundingClientRect().width > 0) {
                             offset = 0;
@@ -225,13 +226,31 @@ function start() {
     // display starter
     displayHeader(config.adBanner)
 
-    offset = document.getElementById('crawl').getBoundingClientRect().width;
+    offset = 0
     setTimeout(() => {
         var imx = 0;
         for (let idx = 0; idx < crawls.length; idx++) {
             const itm = crawls[idx];
             if (itm.substr(0, 1) === '#' || itm.substr(0, 1) === '%') {
                 
+            } else if (itm.substr(0, 2) === '!!') { // alerts
+                const element = document.createElement('div');
+                element.setAttribute('class', 'item');
+                element.setAttribute('data-id', imx);
+                const str = itm.substr(2);
+                if (str.toLowerCase().includes('tornado warning')) {
+                    element.setAttribute('id', `!!tor`)
+                } else if (str.toLowerCase().includes('severe thunderstorm warning')) {
+                    element.setAttribute('id', `!!svr`)
+                } else if (str.toLowerCase().includes('flash flood farning')) {
+                    element.setAttribute('id', `!!ffw`)
+                } else {
+                    element.setAttribute('id', '!!');
+                };
+                tracker(idx);
+                element.innerText = str;
+                usedCrawls.push(itm);
+                container.appendChild(element);
             } else {
                 const element = document.createElement('div');
                 element.setAttribute('data-id', imx);

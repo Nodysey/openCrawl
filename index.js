@@ -38,7 +38,7 @@ async function getWeather() {
     crawls.push('#Weather')
     const details = await fetch(`/data/wx.json`)
         .then(response => response.json())
-        .then(data => {return data});
+        .then(data => {return data.now});
     for (let idx = 0; idx < details.length; idx++) {
         const itm = details[idx];
         crawls.push(`${itm.name} ${itm.temp}° ${itm.phrase}`);
@@ -53,7 +53,7 @@ async function getStocks() {
         .then(data => {return data});
     for (let idx = 0; idx < details.length; idx++) {
         const itm = details[idx];
-        crawls.push(`${itm.name} ${itm.oneDayReturn} ${itm.change}`);
+        crawls.push('^' + `${itm.name} ${itm.oneDayReturn} ${itm.change}`);
         crawls.push('%'); // Add ARN Logo to seperate News Stories
     };
 };
@@ -211,6 +211,9 @@ function start() {
             } else if (itm.substr(0, 1) === '%') { // seperators
                 element.setAttribute('class', 'logo');
                 element.innerText = itm.substr(1);
+            } else if (itm.substr(0, 1) === '^') { // stocks
+                element.setAttribute('class', 'stock');
+                element.innerText = itm.substr(1);
             } else {
                 element.setAttribute('class', 'item');
                 element.innerText = itm;
@@ -229,7 +232,7 @@ async function dateTime() {
 
     const wxPromise = await fetch(`/data/wx.json`);
     const wx = await wxPromise.json();
-    const temp = wx[0].temp;
+    const temp = wx[0].now.temp;
 
     document.getElementById('time').innerText = `${hour}:${minute}`;
     document.getElementById('temp').innerText = `${temp}°`;

@@ -21,11 +21,11 @@ body {
 }
 
 #logo-wrapper {
-    width: 311px;
+    width: 256px;
     height: 140px;
     position: absolute;
     background-color: var(--background);
-    left: 37px;
+    left: 1616px;
     top: 829px;
 
     display: flex;
@@ -50,9 +50,9 @@ body {
     background: var(--background);
     position: absolute;
     top: 969px;
-    left: 348px;
+    left: 48px;
     height: 46px;
-    width: 1511px;
+    width: 1568px;
     overflow: hidden;
 }
 #text-wrapper {
@@ -151,9 +151,9 @@ body {
     flex-shrink: 0;
     position: absolute;
     top: 969px;
-    left: 37px;
+    left: 1616px;
     height: 46px;
-    width: 311px;
+    width: 256px;
     align-items: center;
     justify-content: space-evenly;
     background-color: #808080b0;

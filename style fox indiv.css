@@ -82,6 +82,7 @@ body {
     border-top: 4px solid var(--border-2);
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 #container {
     display: flex;
@@ -91,7 +92,6 @@ body {
     width: max-content;
     align-items: center;
     height: 100%;
-    transform: translateX(100%);
     text-transform: uppercase;
 }
 .item {
@@ -99,11 +99,14 @@ body {
     flex-shrink: 0;
     height: 26px;
     align-items: top;
-    margin: 0 10px;
+    padding: 0 10px;
     justify-content: center;
     font-family: var(--text-font);
     font-weight: bold;
     font-size: 22pt;
+    position: absolute;
+    transform: translateY(135%);
+    text-wrap: nowrap;
 
     animation-duration: .5s;
     animation-timing-function: ease;
@@ -162,6 +165,7 @@ body {
     border-left: 2px solid var(--foreground);
     z-index: 11;
     padding-right: 48px;
+    display: none;
 }
 .headline {
     display: flex;
@@ -223,7 +227,7 @@ body {
 }
 @keyframes header-in {
     from {
-        transform: translateY(125%);
+        transform: translateY(135%);
     }
     to {
         transform: translateY(0%);
@@ -234,7 +238,7 @@ body {
         transform: translateY(0%);
     }
     to {
-        transform: translateY(-125%);
+        transform: translateY(-135%);
     }
 }
 
