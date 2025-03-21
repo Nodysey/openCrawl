@@ -51,13 +51,30 @@ async function fetchWeather() {
         const loc = await fetch(`https://api.weather.com/v3/location/point?postalKey=${itm}&language=en-US&format=json&apiKey=${config.twcApiKey}`)
         .then(response => response.json())
         .then(data => {return data});
-        const details = await fetch(`https://api.weather.com/v3/wx/observations/current?postalKey=${itm}&language=en-US&format=json&units=e&apiKey=${config.twcApiKey}`)
+        const now = await fetch(`https://api.weather.com/v3/wx/observations/current?postalKey=${itm}&language=en-US&format=json&units=e&apiKey=${config.twcApiKey}`)
+        .then(response => response.json())
+        .then(data => {return data});
+        const sevenDay = await fetch(`https://api.weather.com/v3/wx/forecast/daily/7day?postalKey=${itm}&language=en-US&format=json&units=e&apiKey=${config.twcApiKey}`)
         .then(response => response.json())
         .then(data => {return data});
         const data = {
             "name": loc.location.displayName,
-            "temp": details.temperature,
-            "phrase": details.wxPhraseLong,
+            "now": {
+                "temp": now.temperature,
+                "phrase": now.wxPhraseLong,
+            },
+            "daily": [
+                {
+                    "time": sevenDay.daypart[0].daypartName[0],
+                    "temp": sevenDay.daypart[0].temperature[0],
+                    "phrase": sevenDay.daypart[0].wxPhraseLong[0],
+                },
+                {
+                    "time": sevenDay.daypart[0].daypartName[1],
+                    "temp": sevenDay.daypart[0].temperature[1],
+                    "phrase": sevenDay.daypart[0].wxPhraseLong[1],
+                }
+            ],
         }
         list.push(data);
         if (idx == 0) {
@@ -128,9 +145,9 @@ async function fetchSports() {
             const idm = details.events[imx];
             const data = {
                 "league": details.leagues[0].abbreviation,
-                "home_name": idm.competitions[0].competitors[0].team.abbreviation,
+                "home_name": idm.competitions[0].competitors[0].team.name,
                 "home_score": idm.competitions[0].competitors[0].score,
-                "away_name": idm.competitions[0].competitors[1].team.abbreviation,
+                "away_name": idm.competitions[0].competitors[1].team.name,
                 "away_score": idm.competitions[0].competitors[1].score,
                 "time": idm.competitions[0].status.type.shortDetail
             };

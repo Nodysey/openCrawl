@@ -1,5 +1,7 @@
 var speed = 1.5;
 var crawls = [];
+var usedCrawls = [];
+var crawlIdx = 0;
 var offset;
 
 const container = document.getElementById('container');
@@ -41,7 +43,9 @@ async function getWeather() {
         .then(data => {return data});
     for (let idx = 0; idx < details.length; idx++) {
         const itm = details[idx];
-        crawls.push(`${itm.name} ${itm.temp}° ${itm.phrase}`);
+        crawls.push(`${itm.name} ​ | ​ Now ​ | ​ ${itm.now.temp}° ${itm.now.phrase}`);
+        crawls.push(`${itm.name} ​ | ​ ${itm.daily[0].time} ​ | ​ ${itm.daily[0].temp}° ${itm.daily[0].phrase}`);
+        crawls.push(`${itm.name} ​ | ​ ${itm.daily[1].time} ​ | ​ ${itm.daily[1].temp}° ${itm.daily[1].phrase}`);
         crawls.push('%'); // Add ARN Logo to seperate News Stories
     };
 };
@@ -74,8 +78,46 @@ async function getSports() {
     };
 };
 
-function advanceCrawl() {
+function setStory(idx) {
+    const itm = document.querySelector(`[data-id="${String(idx)}"]`);
+    itm.style.animationName = "header-in";
+    setTimeout(() => {itm.style.animationName = "header-out"}, 4500);
+}
+
+async function advanceCrawl() {
     const crawlWidth = document.getElementById('crawl').getBoundingClientRect().width;
+    for (let idx = 0; idx < usedCrawls.length; idx++) {
+        crawlJob = await new Promise((res,reject) => {
+            try {
+            const itm = document.querySelector(`[data-id="${String(idx)}"]`);
+            itm.style.animationName = "header-in";
+            if (itm.getBoundingClientRect().width > crawlWidth) {
+                setTimeout(() => {
+                    var t = setInterval(() => {
+                        itm.style.transform = `translateX(${offset}px)`;
+                        offset = offset - speed;
+                        if ((offset * -1) - itm.getBoundingClientRect().width > 0) {
+                            offset = 0;
+                            clearInterval(t);
+                            res();
+                        };
+                    }, 10)
+                },2000)
+            } else {
+                setTimeout(() => {itm.style.animationName = "header-out"; res();}, 7500);
+            };
+            } catch(err) {
+                reject(err);
+            }
+        });
+    };
+    crawls = [];
+    start();
+    /*const itm = document.querySelector(`[data-id="${String(crawlIdx)}"]`);
+    itm.style.animationName = "header-in";
+    setTimeout(() => {itm.style.animationName = "header-out"}, 7500);
+    crawlIdx++;*/
+    /*const crawlWidth = document.getElementById('crawl').getBoundingClientRect().width;
     const containerWidth = document.getElementById('container').getBoundingClientRect().width;
     container.style.transform = `translateX(${offset}px)`;
     offset = offset - speed;
@@ -83,7 +125,7 @@ function advanceCrawl() {
         crawls = [];
         clearInterval(crawlAdvancer);
         start();
-    }
+    }*/
 };
 
 async function displayHeader(text) {
@@ -111,13 +153,13 @@ async function changeHeader(text) {
 }
 
 async function tracker(idx) {
-    const crawlWidth = document.getElementById('crawl').getBoundingClientRect().width;
+    const crawlWidth = document.getElementById('crawl').getBoundingClientRect().height;
     const trackInt = setInterval(check, 200);
     console.log('tracker placed on item', idx)
     function check() {
         const itm = document.querySelector(`[data-id="${String(idx)}"]`);
-        const xPos = itm.getBoundingClientRect().left;
-        if (xPos - 348 < crawlWidth) {
+        const xPos = itm.getBoundingClientRect().y;
+        if (xPos < crawlWidth) {
             if (itm.id.substring(0,2) == '!!') {
                 daddyCantore(true);
                 const beep = cueAndPlay('beep');
@@ -185,39 +227,22 @@ function start() {
 
     offset = document.getElementById('crawl').getBoundingClientRect().width;
     setTimeout(() => {
+        var imx = 0;
         for (let idx = 0; idx < crawls.length; idx++) {
             const itm = crawls[idx];
-            const element = document.createElement('div');
-            element.setAttribute('data-id', idx);
-            if (itm.substr(0, 2) === '!!') { // alerts
-                element.setAttribute('class', 'item');
-                const str = itm.substr(2);
-                if (str.toLowerCase().includes('tornado warning')) {
-                    element.setAttribute('id', `!!tor`)
-                } else if (str.toLowerCase().includes('severe thunderstorm warning')) {
-                    element.setAttribute('id', `!!svr`)
-                } else if (str.toLowerCase().includes('flash flood farning')) {
-                    element.setAttribute('id', `!!ffw`)
-                } else {
-                    element.setAttribute('id', '!!');
-                };
-                tracker(idx);
-                element.innerText = str;
-            } else if (itm.substr(0, 1) === '#') { // headlines
-                element.setAttribute('class', 'crawl-header');
-                element.setAttribute('id', itm.substr(1));
-                tracker(idx);
-                element.innerText = '';
-            } else if (itm.substr(0, 1) === '%') { // seperators
-                element.setAttribute('class', 'logo');
-                element.innerText = itm.substr(1);
+            if (itm.substr(0, 1) === '#' || itm.substr(0, 1) === '%') {
+                
             } else {
+                const element = document.createElement('div');
+                element.setAttribute('data-id', imx);
                 element.setAttribute('class', 'item');
                 element.innerText = itm;
+                usedCrawls.push(itm);
+                container.appendChild(element);
+                imx++;
             };
-            container.appendChild(element);
         }
-        crawlAdvancer = setInterval(advanceCrawl,10);
+        advanceCrawl();
     }, 5000);
 };
 start();
@@ -229,7 +254,7 @@ async function dateTime() {
 
     const wxPromise = await fetch(`/data/wx.json`);
     const wx = await wxPromise.json();
-    const temp = wx[0].temp;
+    const temp = wx[0].now.temp;
 
     document.getElementById('time').innerText = `${hour}:${minute}`;
     document.getElementById('temp').innerText = `${temp}°`;
