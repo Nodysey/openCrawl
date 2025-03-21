@@ -70,14 +70,13 @@ http://localhost:40
 
 ### Styling
 The appearance can be customized by modifying `style.css`. The project includes two style variants:
-- Default style (`style.css`)
+- Default style (`style.css`) - nicknamed "Botswana"
 - Fox News style (`style fox.css`)
 
 ### Fonts
-The project uses custom fonts:
+The project currently uses two fonts:
 - ARN Affiliate Sans
-- Benton Sans
-- Proxima Nova
+- Inter
 
 Place your font files in the `fonts/` directory and update the `@font-face` declarations in the CSS.
 
