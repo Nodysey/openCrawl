@@ -227,6 +227,7 @@ function start() {
     displayHeader(config.adBanner)
 
     offset = 0
+    document.getElementById("headcont").style.display = "none";
     setTimeout(() => {
         var imx = 0;
         for (let idx = 0; idx < crawls.length; idx++) {
@@ -251,11 +252,24 @@ function start() {
                 element.innerText = str;
                 usedCrawls.push(itm);
                 container.appendChild(element);
+                imx++;
+            } else if (itm.substr(0, 1) === '^') { // stocks
+                const element = document.createElement('div');
+                element.setAttribute('data-id', imx);
+                element.setAttribute('class', 'stock');
+                element.innerText = itm;
+                element.style.position = "absolute";
+                element.style.transform = "translateY(135%)"
+                usedCrawls.push(itm);
+                container.appendChild(element);
+                imx++;
             } else {
                 const element = document.createElement('div');
                 element.setAttribute('data-id', imx);
                 element.setAttribute('class', 'item');
                 element.innerText = itm;
+                element.style.position = "absolute";
+                element.style.transform = "translateY(135%)"
                 usedCrawls.push(itm);
                 container.appendChild(element);
                 imx++;

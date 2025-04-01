@@ -69,14 +69,22 @@ http://localhost:40
 ## Customization
 
 ### Styling
-The appearance can be customized by modifying `style.css`. The project includes two style variants:
-- Default style (`style.css`) - nicknamed "Botswana"
-- Fox News style (`style fox.css`)
+The appearance can be customized by modifying `default.css`. The project includes three premade style variants:
+- Default style (`default.css`)
+- Fox Owned Stations style (`fox.css`)
+- 6abc 2017 style (`wpvi.css`)
+
+### Modes
+The crawl uses two different scrolling algorithms that change how the text is displayed:
+- One long scroll (`default`)
+- Cycle through each item, scrolling when necessary (`individual`)
 
 ### Fonts
-The project currently uses two fonts:
-- ARN Affiliate Sans
+The project currently uses four fonts:
+- ARN Affiliate Sans (Custom Font, for Seperator Logos)
 - Inter
+- Benton Sans
+- Avenir
 
 Place your font files in the `fonts/` directory and update the `@font-face` declarations in the CSS.
 

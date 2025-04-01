@@ -1,37 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @font-face {
     font-family: "ARN Affiliate Sans";
-    src: url("./fonts/ArnAffiliateSans-Regular.otf");
+    src: url("/fonts/ArnAffiliateSans-Regular.otf");
 }
-
-@font-face {
-    font-family: "Benton Sans";
-    src: url("./fonts/BentonSans Regular.otf");
-}
-
-@font-face {
-    font-family: "Benton Sans";
-    font-weight: bold;
-    src: url("./fonts/BentonSans Bold.otf");
-}
-
-@font-face {
-    font-family: "Proxima Nova";
-    src: url("./fonts/ProximaNova-Regular.woff2");
-}
-
-@font-face {
-    font-family: "Proxima Nova";
-    font-weight: bold;
-    src: url("./fonts/Proxima\ Nova\ Bold.woff2");
-}
-
 * {
     box-sizing: border-box;
-    --text-font: "Benton Sans", Arial, Helvetica, sans-serif;
+    --text-font: "Inter", Arial, Helvetica, sans-serif;
     --logo-font: "ARN Affiliate Sans";
-    --background: #001b6c;
+    --background: #4d148d;
     --foreground: #ffffff;
-    --text-color: #001b6c;
+    --text-color: #ffffff;
     --severe-background: #990304;
     --border-1: #b0b0b0;
     --border-2: #990304; /* #edf41f */
@@ -43,22 +21,23 @@ body {
 }
 
 #logo-wrapper {
-    width: 224px;
-    height: 82px;
+    width: 384px;
+    height: 170px;
     position: absolute;
     background-color: var(--background);
-    left: 88px;
-    top: 918px;
-    border-right: 3px solid var(--foreground);
+    left: 1536px;
+    top: 910px;
 
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-right: 48px;
+    padding-bottom: 26px;
 }
 
 #logo {
     width: auto;
-    height: 60px;
+    height: 90px;
 }
 
 .main {
@@ -71,18 +50,16 @@ body {
 #crawl {
     color: var(--foreground);
     background: var(--background);
-    position: relative;
-    top: 1000px;
-    left: 312px;
+    position: absolute;
+    top: 864px;
+    left: 0;
     height: 46px;
-    width: 1608px;
+    width: 1536px;
     overflow: hidden;
 }
 #text-wrapper {
-    border-top: 4px solid var(--border-2);
     width: 100%;
     height: 100%;
-    overflow: hidden;
 }
 #container {
     display: flex;
@@ -93,34 +70,26 @@ body {
     align-items: center;
     height: 100%;
     transform: translateX(100%);
-    text-transform: uppercase;
 }
 .item {
     display: flex;
     flex-shrink: 0;
-    height: 26px;
-    align-items: top;
-    padding: 0 10px;
-    justify-content: center;
-    font-family: var(--text-font);
-    font-weight: bold;
-    font-size: 22pt;
-    text-wrap: nowrap;
-
-    animation-duration: .5s;
-    animation-timing-function: ease;
-    animation-fill-mode: forwards;
-}
-.stock {
-    display: flex;
-    flex-shrink: 0;
-    height: 24pt;
     align-items: top;
     margin: 0 10px;
     justify-content: center;
     font-family: var(--text-font);
-    font-weight: normal;
-    font-size: 24pt;
+    font-weight: 600;
+    font-size: 20pt;
+}
+.stock {
+    display: flex;
+    flex-shrink: 0;
+    align-items: top;
+    margin: 0 10px;
+    justify-content: center;
+    font-family: var(--text-font);
+    font-weight: 600;
+    font-size: 20pt;
 }
 .logo {
     justify-content: center;
@@ -129,7 +98,7 @@ body {
     align-items: center;
     font-family: var(--logo-font);
     font-weight: normal;
-    font-size: 24pt;
+    font-size: 20pt;
 }
 #start {
     display: flex;
@@ -146,24 +115,21 @@ body {
 .header {
     display: flex;
     flex-shrink: 0;
-    margin: 11px 10px;
     font-family: var(--text-font);
     font-weight: bold;
-    font-size: 24pt;
+    font-size: 20pt;
+    align-items: center;
 }
 #headcont {
     display: flex;
-    flex-shrink: 0;
     position: absolute;
-    right: 0;
+    left: 0;
     width: 240px;
     height: 100%;
-    border-top: 2px solid var(--border-2);
     justify-content: center;
-    background-color: var(--background);
-    border-left: 2px solid var(--foreground);
+    background-color: #5c1ca6;
     z-index: 11;
-    padding-right: 48px;
+    padding-left: 48px;
 }
 .headline {
     display: flex;
@@ -171,7 +137,6 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 21px;
     flex-shrink: 0;
     margin: 0;
     justify-content: center;
@@ -188,27 +153,26 @@ body {
     display: flex;
     flex-shrink: 0;
     position: absolute;
-    top: 1000px;
-    left: 88px;
+    top: 864px;
+    left: 1536px;
     height: 46px;
-    width: 224px;
+    width: 384px;
     align-items: center;
     justify-content: space-evenly;
-    background-color: var(--foreground);
-    color: var(--background);
+    background-color: #808080b0;
+    color: var(--foreground);
     z-index: 11;
+    padding-right: 48px;
 }
 #time, #temp {
     display: flex;
     width: fit-content;
     flex-shrink: 0;
-    height: 24px;
     font-family: var(--text-font);
     justify-content: center;
     font-weight: 500;
-    font-size: 23pt;
+    font-size: 20pt;
     text-wrap: nowrap;
-    font-weight: bold;
     animation-duration: .2s;
     animation-timing-function: linear;
     animation-fill-mode: forwards;
@@ -225,7 +189,7 @@ body {
 }
 @keyframes header-in {
     from {
-        transform: translateY(125%);
+        transform: translateY(100%);
     }
     to {
         transform: translateY(0%);
@@ -236,7 +200,7 @@ body {
         transform: translateY(0%);
     }
     to {
-        transform: translateY(-125%);
+        transform: translateY(-100%);
     }
 }
 

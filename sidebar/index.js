@@ -38,7 +38,7 @@ async function getWeather() {
     crawls.push('#Weather')
     const details = await fetch(`/data/wx.json`)
         .then(response => response.json())
-        .then(data => {return data.now});
+        .then(data => {return data});
     for (let idx = 0; idx < details.length; idx++) {
         const itm = details[idx];
         crawls.push(`${itm.name} ${itm.temp}° ${itm.phrase}`);
@@ -145,13 +145,13 @@ async function tracker(idx) {
 function cueAndPlay(type) {
     var audio;
     if (type == 'beep') {
-        audio = new Audio('audio/warningbeep.wav');
+        audio = new Audio('/audio/warningbeep.wav');
     } else if (type == 'tor') {
-        audio = new Audio('audio/tor.wav');
+        audio = new Audio('/audio/tor.wav');
     } else if (type == 'svr') {
-        audio = new Audio('audio/svr.wav');
+        audio = new Audio('/audio/svr.wav');
     } else if (type == 'ffw') {
-        audio = new Audio('audio/ffw.wav');
+        audio = new Audio('/audio/ffw.wav');
     };
     audio.play();
     return audio
@@ -161,35 +161,13 @@ function daddyCantore(enableOrDisable) {
     if (enableOrDisable == true) {
         document.getElementById('crawl').style.background = 'var(--severe-background)';
         document.getElementById('logo-wrapper').style.background = 'var(--severe-background)';
-        document.getElementById('logo-wrapper').classList.add('severe');
-        document.getElementById('datetime-wrap').classList.add('severe');
-        document.getElementById('title-wrap').classList.add('severe');
-        document.getElementById('subtitle-wrap').classList.add('severe');
-        //document.getElementById('datetime-wrap').style.color = 'var(--severe-background)';
+        document.getElementById('datetime-wrap').style.color = 'var(--severe-background)';
         document.getElementById('headcont').style.display = 'none';
     } else {
         document.getElementById('crawl').style.background = 'var(--background)';
-        document.getElementById('logo-wrapper').style.background = 'var(--logo-bg)';
-        document.getElementById('logo-wrapper').classList.remove('severe');
-        document.getElementById('datetime-wrap').classList.remove('severe');
-        document.getElementById('title-wrap').classList.remove('severe');
-        document.getElementById('subtitle-wrap').classList.remove('severe');
-        //document.getElementById('datetime-wrap').style.color = 'var(--text-color)';
+        document.getElementById('logo-wrapper').style.background = 'var(--background)';
+        document.getElementById('datetime-wrap').style.color = 'var(--text-color)';
         document.getElementById('headcont').style.display = 'flex';
-    }
-}
-
-function redMode(enableOrDisable) {
-    if (enableOrDisable == true) {
-        document.getElementById('crawl').style.background = 'var(--severe-background)';
-        document.getElementById('logo-wrapper').style.background = 'var(--severe-background)';
-        document.getElementById('logo-wrapper').classList.add('severe');
-        document.getElementById('datetime-wrap').classList.add('severe');
-    } else {
-        document.getElementById('crawl').style.background = 'var(--background)';
-        document.getElementById('logo-wrapper').style.background = 'var(--logo-bg)';
-        document.getElementById('logo-wrapper').classList.remove('severe');
-        document.getElementById('datetime-wrap').classList.remove('severe');
     }
 }
 
@@ -197,12 +175,10 @@ function start() {
     crawls = [];
     document.getElementById('container').innerHTML = '';
     setTimeout(() => {getAlerts()}, 0);
-    if (doWeHaveAlerts == false) {
-        setTimeout(() => {getNewsStories()}, 500);
-        setTimeout(() => {getWeather()}, 1000);
-        setTimeout(() => {getStocks()}, 1500);
-        setTimeout(() => {getSports()}, 2000);
-    }
+    setTimeout(() => {getNewsStories()}, 500);
+    setTimeout(() => {getWeather()}, 1000);
+    setTimeout(() => {getStocks()}, 1500);
+    setTimeout(() => {getSports()}, 2000);
 
     // display starter
     displayHeader(config.adBanner)
@@ -256,7 +232,7 @@ async function dateTime() {
 
     const wxPromise = await fetch(`/data/wx.json`);
     const wx = await wxPromise.json();
-    const temp = wx[0].now.temp;
+    const temp = wx[0].temp;
 
     document.getElementById('time').innerText = `${hour}:${minute}`;
     document.getElementById('temp').innerText = `${temp}°`;

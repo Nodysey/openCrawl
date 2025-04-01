@@ -1,18 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @font-face {
     font-family: "ARN Affiliate Sans";
     src: url("./fonts/ArnAffiliateSans-Regular.otf");
 }
+
+@font-face {
+    font-family: "Neue Plak";
+    src: url("./fonts/NeuePlak-Bold.otf");
+    font-weight: bold;
+}
+
 * {
     box-sizing: border-box;
-    --text-font: "Inter", Arial, Helvetica, sans-serif;
+    --text-font: "Neue Plak", Arial, Helvetica, sans-serif;
     --logo-font: "ARN Affiliate Sans";
-    --background: #4d148d;
+    --background: #00144e;
     --foreground: #ffffff;
-    --text-color: #ffffff;
-    --severe-background: #990304;
+    --text-color: #00144e;
+    --severe-background: #a70000;
     --border-1: #b0b0b0;
-    --border-2: #990304; /* #edf41f */
+    --border-2: #a70000; /* #edf41f */
     --border-3: #d0d0d0;
 }
 
@@ -21,12 +27,13 @@ body {
 }
 
 #logo-wrapper {
-    width: 311px;
-    height: 140px;
+    width: 227px;
+    height: 87px;
     position: absolute;
     background-color: var(--background);
-    left: 37px;
-    top: 829px;
+    left: 82px;
+    top: 901px;
+    border-right: 6px solid var(--foreground);
 
     display: flex;
     justify-content: center;
@@ -35,7 +42,7 @@ body {
 
 #logo {
     width: auto;
-    height: 90px;
+    height: 60px;
 }
 
 .main {
@@ -48,52 +55,46 @@ body {
 #crawl {
     color: var(--foreground);
     background: var(--background);
-    position: absolute;
-    top: 969px;
-    left: 348px;
+    position: relative;
+    top: 988px;
+    left: 306px;
     height: 46px;
-    width: 1511px;
+    width: 1614px;
     overflow: hidden;
 }
 #text-wrapper {
+    border-top: 6px solid var(--border-2);
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 #container {
     display: flex;
     flex-shrink: 0;
     position: relative;
     left: 0;
-    width: 100%;
+    width: max-content;
     align-items: center;
     height: 100%;
+    transform: translateX(100%);
+    text-transform: uppercase;
 }
-.item {
+.item, .stock {
     display: flex;
     flex-shrink: 0;
-    align-items: start;
-    margin: 0 10px;
-    justify-content: left;
+    height: 37px;
+    align-items: end;
+    padding: 0 10px;
+    justify-content: center;
     font-family: var(--text-font);
-    font-weight: 600;
-    font-size: 20pt;
-    position: absolute;
-    transform: translateY(125%);
+    font-weight: bold;
+    font-size: 24pt;
     text-wrap: nowrap;
 
     animation-duration: .5s;
     animation-timing-function: ease;
     animation-fill-mode: forwards;
-}
-.stock {
-    display: flex;
-    flex-shrink: 0;
-    align-items: top;
-    margin: 0 10px;
-    justify-content: center;
-    font-family: var(--text-font);
-    font-weight: 600;
-    font-size: 20pt;
+    letter-spacing: 1pt;
 }
 .logo {
     justify-content: center;
@@ -102,8 +103,7 @@ body {
     align-items: center;
     font-family: var(--logo-font);
     font-weight: normal;
-    font-size: 20pt;
-    display: none;
+    font-size: 24pt;
 }
 #start {
     display: flex;
@@ -120,21 +120,26 @@ body {
 .header {
     display: flex;
     flex-shrink: 0;
+    margin: 0 10px;
     font-family: var(--text-font);
     font-weight: bold;
-    font-size: 20pt;
-    align-items: center;
+    font-size: 24pt;
+    align-items: end;
+    height: 44px;
 }
 #headcont {
     display: flex;
+    flex-shrink: 0;
     position: absolute;
-    left: 0;
-    width: 180px;
+    right: 0;
+    width: 240px;
     height: 100%;
+    border-top: 3px solid var(--border-2);
     justify-content: center;
-    background-color: #5c1ca6;
+    background-color: var(--background);
+    border-left: 3px solid var(--foreground);
     z-index: 11;
-    display: none;
+    padding-right: 48px;
 }
 .headline {
     display: flex;
@@ -142,6 +147,7 @@ body {
     top: 0;
     left: 0;
     width: 100%;
+    height: 29px;
     flex-shrink: 0;
     margin: 0;
     justify-content: center;
@@ -152,34 +158,49 @@ body {
     animation-duration: .2s;
     animation-timing-function: linear;
     animation-fill-mode: forwards;
+    align-items: end;
 }
 
 #datetime-wrap {
     display: flex;
     flex-shrink: 0;
     position: absolute;
-    top: 969px;
-    left: 37px;
+    top: 988px;
+    left: 82px;
     height: 46px;
-    width: 311px;
+    width: 227px;
     align-items: center;
     justify-content: space-evenly;
-    background-color: #808080b0;
-    color: var(--foreground);
+    background-color: var(--foreground);
+    color: var(--background);
     z-index: 11;
 }
+
+#datetime-wrap::before {
+    content: '';
+    position: absolute;
+    background-color: var(--border-2);
+    width: calc(100% - 6px);
+    height: 6px;
+    top: 0;
+    left: 0;
+}
+
 #time, #temp {
     display: flex;
     width: fit-content;
     flex-shrink: 0;
+    height: 33pt;
     font-family: var(--text-font);
     justify-content: center;
     font-weight: 500;
-    font-size: 20pt;
+    font-size: 23pt;
     text-wrap: nowrap;
+    font-weight: bold;
     animation-duration: .2s;
     animation-timing-function: linear;
     animation-fill-mode: forwards;
+    align-items: end;
 }
 #greater-mask, #lesser-mask {
     width: 100%;
